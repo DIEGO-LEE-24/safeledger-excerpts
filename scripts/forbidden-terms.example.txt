@@ -1,0 +1,15 @@
+# scripts/forbidden-terms.txt 의 본보기.
+# 실제 파일은 .gitignore 로 제외한다 - 가리려는 값을 가리개 안에 적으면 안 된다.
+# 한 줄에 하나씩, 저장소에 절대 남으면 안 되는 고유명사를 적는다. # 뒤는 주석.
+#
+# 적을 것의 갈래
+#   거래처 · 고객사 이름
+#   현장 · 지역 이름
+#   운영 도메인
+#   사내 패키지 최상위 이름
+#
+# 아래는 본보기일 뿐 실제 값이 아니다.
+example-client-name
+example-site-name
+internal.example.com
+com.example.internal

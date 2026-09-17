@@ -1,0 +1,26 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # 공개해서는 안 되는 문자열이 커밋에 섞여 들어오는 것을 사람 기억이 아니라 여기서 막는다.
+      # 고유명사 목록은 저장소에 두지 않는다. 저장소에 두면 가리려던 값이 가리개 안에 남는다.
+      # Settings > Secrets and variables > Actions 에 FORBIDDEN_TERMS 를 한 줄에 하나씩 넣는다.
+      - name: 금칙어 스캔
+        env:
+          FORBIDDEN_TERMS: ${{ secrets.FORBIDDEN_TERMS }}
+        run: bash scripts/scan-forbidden.sh
+
+      - name: 테스트
+        run: mvn -B test

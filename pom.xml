@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.safeledger</groupId>
+  <artifactId>safeledger-excerpts</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>safeledger-excerpts</name>
+  <description>비공개 저장소에서 발췌한 백엔드 코드와, 그 주장을 확인하는 테스트</description>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <!-- 이 저장소의 소스는 주석·테스트 이름이 한국어다. 인코딩을 명시하지 않으면
+         Windows 기본 코드페이지(MS949)로 읽어 unmappable character 로 컴파일이 깨진다. -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <junit.version>5.11.4</junit.version>
+    <spring.version>6.2.6</spring.version>
+    <spring.data.version>3.4.5</spring.data.version>
+    <spring.security.version>6.4.5</spring.security.version>
+    <hibernate.version>6.6.13.Final</hibernate.version>
+    <jackson.version>2.18.3</jackson.version>
+  </properties>
+
+  <dependencies>
+    <!-- 묶음 2(아웃박스) — 이 코드의 결함이 스프링 AOP 자기호출이라, 애노테이션을 걷어내면
+         이야기 자체가 사라진다. 그래서 원문 그대로 두고 필요한 만큼만 의존을 건다. -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>${spring.data.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <!-- 묶음 3(테넌트) — resolveCurrentTenantIdentifier 가 null 을 돌려주면 안 되는 까닭이
+         Hibernate 쪽 계약이라, 그 인터페이스를 그대로 구현한다. -->
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>${spring.security.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <!-- 테스트 이름이 한국어라 콘솔 출력 인코딩도 고정한다. -->
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

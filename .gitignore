@@ -1,0 +1,9 @@
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+
+# 금칙 고유명사 목록 — 가리려는 값을 저장소 안에 두면 가리개가 유출원이 된다.
+# 본보기는 scripts/forbidden-terms.example.txt 를 볼 것.
+scripts/forbidden-terms.txt
