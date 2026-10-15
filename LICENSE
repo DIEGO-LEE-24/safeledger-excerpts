@@ -1,25 +1,21 @@
-MIT License
+SafeLedger 발췌 저장소 — 이용 조건
 
-Copyright (c) 2026 Lee Sang-Cheol
+이 저장소의 파일은 비공개 팀 프로젝트 SafeLedger 에서 개인 포트폴리오용으로 발췌한 것이다.
+원 저장소(SafeLedger)는 비공개로 유지하며, 이 조건은 이 저장소에 담긴 파일에만 적용된다.
 
-이 라이선스는 이 저장소에 담긴 파일에만 적용된다. 이 파일들은 비공개 팀 프로젝트에서
-발췌한 것이며, 발췌한 파일은 전부 본인 단독 작성분이다(git blame 기준). 원 저장소 전체의
-라이선스와 권리 귀속은 이 라이선스와 별개다.
+작성과 공개
+- 발췌한 파일의 원본 커밋은 이상철 계정으로 작성됐고, 대부분 Claude Code 와 공동 작성했다.
+  git 작성자 기록은 누가 손으로 썼는지를 증명하지 않는다.
+- 발췌하면서 패키지 이름, 로깅·예외 의존, 사용자 문구를 바꿨고 테스트 일부를 새로 추가했다.
+- SafeLedger 팀은 이 발췌본을 공개하는 데 합의했다.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+이용 조건
+- 오픈소스 라이선스(MIT 등)는 적용하지 않는다. 적용하려면 팀의 별도 합의가 필요하다.
+- 허용: 이 저장소를 열람하고, 내려받아 빌드·테스트를 실행해 작성자의 작업을 평가하는 것.
+- 허용하지 않음: 위 목적을 벗어난 복제·수정·재배포·상업적 이용.
+- 이 파일들에 대한 권리는 원 프로젝트(SafeLedger 팀 프로젝트)의 권리 귀속을 따른다.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+참고
+- 이 저장소의 이전 판(커밋 7edac97, 2026-09-17)에는 MIT License 가 붙어 있었다.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+이 파일들은 있는 그대로 제공되며, 어떤 보증도 하지 않는다.
