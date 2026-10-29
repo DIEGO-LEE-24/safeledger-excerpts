@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *   <li>중첩 runAs 가 끝날 때 해제가 바깥 회사까지 지웠다 → 바깥의 남은 쿼리가 테넌트 없이 나갔다.</li>
  *   <li>블록 안에서 예외가 나도 복원이 돼야 한다(finally 가 없으면 회사가 새는 채로 남는다).</li>
  *   <li>companyId 가 null 이면 조용히 호출자 테넌트로 실행됐다 → 즉시 실패로 바꿨다.</li>
- *   <li>미인증이면 Hibernate 가 null 을 'root'(전체 조회)로 읽는다 → 0L 로 접는다.</li>
+ *   <li>미인증이면 테넌트 조건 없이 조회될 위험이 있어 0L 로 접는다(필터 우회 방지).</li>
  * </ol>
  */
 class TenantResolverTest {
@@ -94,13 +94,13 @@ class TenantResolverTest {
     }
 
     @Test
-    @DisplayName("★미인증이면 0 이다(null 을 돌려주면 Hibernate 가 전체 조회로 읽는다)")
+    @DisplayName("★미인증이면 0 이다(null 은 테넌트 필터를 우회할 위험이 있어 0 으로 접는다)")
     void unauthenticatedResolvesToZeroNotNull() {
         Long tenant = resolver.resolveCurrentTenantIdentifier();
 
         assertEquals(0L, tenant);
         assertNotEquals(null, tenant,
-                "★null 은 'root' = 전체 조회다. 미인증 요청 하나가 전 회사 원장을 읽게 된다");
+                "★null 은 테넌트 조건 없이 조회될 위험이 있다 — 그래서 미인증은 0 으로 접는다");
     }
 
     @Test
@@ -111,7 +111,7 @@ class TenantResolverTest {
     }
 
     @Test
-    @DisplayName("운영자(소속 회사 없음)도 0 이다 — 전체 조회가 아니다")
+    @DisplayName("운영자(소속 회사 없음)도 0 이다 — 모든 회사로 번지지 않는다")
     void operatorWithoutCompanyResolvesToZero() {
         authenticateAs(null);
         assertEquals(0L, resolver.resolveCurrentTenantIdentifier());

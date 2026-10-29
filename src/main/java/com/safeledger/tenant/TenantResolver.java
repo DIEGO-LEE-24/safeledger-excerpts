@@ -11,10 +11,10 @@ import java.util.function.Supplier;
  * <p>{@code @TenantId} 가 붙은 엔티티의 모든 SELECT·UPDATE·DELETE 에 companyId 조건이 자동
  * 주입되고, INSERT 때 companyId 가 자동으로 채워진다. 리포지토리와 서비스는 손대지 않는다.
  *
- * <p>★<b>null 을 돌려주면 안 된다.</b> Hibernate 는 null 테넌트를 'root' 로 취급해 <b>전체 조회</b>가
- * 된다 — 미인증 요청 하나가 전 회사 원장을 읽는다. 그래서 미인증·운영자(회사 없음) 요청은
- * <b>0L</b> 로 접는다. 0 은 어떤 회사와도 맞지 않으므로 아무것도 안 보인다.
- * "비어 있음"을 "전부"로 읽는 기본값은 이 부류에서 가장 비싼 기본값이다.
+ * <p>★<b>null 을 돌려주면 안 된다.</b> 테넌트 식별자가 null 이면 설정·버전에 따라 {@code @TenantId}
+ * 필터가 적용되지 않아 테넌트 조건 없이 조회될 위험이 있다. 그래서 미인증·운영자(회사 없음) 요청은
+ * <b>0L</b> 로 방어적으로 접는다. 0 은 어떤 회사와도 맞지 않으므로 아무것도 안 보인다.
+ * (공개 테스트는 식별자 해석·컨텍스트 복원을 검증할 뿐, 실제 SQL 격리나 타사 데이터 노출은 증명하지 않는다.)
  */
 public class TenantResolver implements CurrentTenantIdentifierResolver<Long> {
 
