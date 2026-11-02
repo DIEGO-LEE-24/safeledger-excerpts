@@ -3,6 +3,16 @@
 [![tests](https://github.com/DIEGO-LEE-24/safeledger-excerpts/actions/workflows/test.yml/badge.svg)](../../actions)
 [![JDK 17](https://img.shields.io/badge/JDK-17-blue)](pom.xml)
 
+> **English summary.** SafeLedger is a 4-person team project: a SaaS that keeps industrial subcontractors' safety-inspection and incident records isolated per company. I was team lead and owned the backend (design, review, verification, merging). This repository holds three files from that backend, taken from commits under my account, each fixing a defect we actually found. Most of the original code was co-written with Claude Code; design decisions, review, verification and merging were mine.
+>
+> | Excerpt | Problem found | Fix | What the tests here pin down |
+> | --- | --- | --- | --- |
+> | single-flight | A warm-up job and a user click hit the same ledger at once and both slowed down | Overlapping calls wait for one computation; past the wait ceiling they get 503 instead of starting a second run | 4 overlapping calls → 1 computation |
+> | transactional outbox | Delivery succeeded but "sent" was never saved, so the same fingerprint was re-sent every 60 s | Save the sent state explicitly instead of relying on dirty checking | second cycle: 2 POSTs → 1 |
+> | tenant context | A nested `runAs` cleared the outer company on exit | Save and restore the previous value; unauthenticated resolves to 0, not null | 0 → 8 dedicated regression tests |
+>
+> Run with JDK 17+ and Maven 3.9+: `mvn test` → `Tests run: 20, Failures: 0`. The tests assert counts, not timings. The Korean text below is the full original.
+
 **이상철** · 4인 팀 팀장 · 백엔드 총괄(설계·검토·검증·병합) · 2026.06~ 개발, 2026.08.24~ 배포 서버 가동(외부 사용자 없음)
 diegolee5494@gmail.com
 
