@@ -106,7 +106,11 @@ src/main/java/com/safeledger/
   tenant/CurrentTenant.java                 인증 컨텍스트에서 회사 읽기
 src/test/java/com/safeledger/               @Test 20건
 scripts/scan-forbidden.sh                   공개 금칙 문자열 검사(CI 가 매 push 실행)
+rag-eval/                                   법령 검색(RAG) 평가 — 정답 묶음 100문 · 채점 스크립트 · 실측 결과
 ```
+
+`rag-eval/` 은 위 세 묶음과 성격이 다릅니다. 검색 API 서버가 이 저장소에 없어 `mvn test` 로 재현되지 않고,
+문항·채점 규칙·기록된 결과를 읽어서 확인하는 자료입니다. 설명은 [rag-eval/README.md](rag-eval/README.md) 에 있습니다.
 
 ## 되돌려서 빨간불을 확인하는 법
 
